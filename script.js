@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebas
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
 
+// YOUR CONFIG (Matches your GitHub repo)
 const firebaseConfig = {
     apiKey: "AIzaSyB29tzhZtFmDnsJAFjvwrXv78MQnFJ7QTk",
     authDomain: "discord-cbeb9.firebaseapp.com",
@@ -12,25 +13,22 @@ const firebaseConfig = {
     measurementId: "G-8DF0XRN7S4"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// UI Elements
 const authBtn = document.getElementById('auth-btn');
 const userInfo = document.getElementById('user-info');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 const messageFeed = document.getElementById('message-container');
 
-// 1. Auth Logic
 authBtn.onclick = () => {
     if (auth.currentUser) {
         signOut(auth);
     } else {
         const email = prompt("Enter email:");
-        const pass = "123456"; // Simplified for your first version
+        const pass = "123456"; 
         signInWithEmailAndPassword(auth, email, pass).catch(() => {
             createUserWithEmailAndPassword(auth, email, pass);
         });
@@ -47,11 +45,9 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// 2. Chat Logic
 messageForm.onsubmit = (e) => {
     e.preventDefault();
-    if (!auth.currentUser) return alert("Please login first!");
-    
+    if (!auth.currentUser) return alert("Login first!");
     if (messageInput.value.trim()) {
         push(ref(db, 'messages'), {
             user: auth.currentUser.email.split('@')[0],
@@ -62,11 +58,10 @@ messageForm.onsubmit = (e) => {
     }
 };
 
-// 3. Real-time Listener
 onChildAdded(ref(db, 'messages'), (snapshot) => {
     const data = snapshot.val();
     const msgDiv = document.createElement('div');
-    msgDiv.className = "message-item"; // You can style this in CSS
+    msgDiv.className = "message-item";
     msgDiv.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
     messageFeed.appendChild(msgDiv);
     messageFeed.scrollTop = messageFeed.scrollHeight;
