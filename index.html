@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="server-list">
+            <div class="server-icon home">D</div>
+            <div class="divider"></div>
+            <div class="server-icon">G</div>
+            <div class="server-icon plus">+</div>
+        </nav>
+
+        <aside class="channel-list">
+            <header class="server-header">Global Community</header>
+            <div class="channel-group">
+                <p class="group-label">TEXT CHANNELS</p>
+                <div class="channel-item active"># general</div>
+                <div class="channel-item"># coding-help</div>
+            </div>
+            
+            <div class="user-panel">
+                <div class="user-meta">
+                    <div class="avatar"></div>
+                    <div id="user-info">Logged Out</div>
+                </div>
+                <button id="auth-btn">Login</button>
+            </div>
+        </aside>
+
+        <main class="chat-main">
+            <header class="chat-header">
+                <span class="hashtag">#</span> general
+            </header>
+            
+            <div id="message-container" class="message-feed">
+                </div>
+            
+            <form id="message-form" class="input-area">
+                <input type="text" id="message-input" placeholder="Message #general" autocomplete="off">
+            </form>
+        </main>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
